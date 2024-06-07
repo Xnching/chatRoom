@@ -1,0 +1,81 @@
+JFDML JFormDesigner: "8.2.3.0.386" Java: "17.0.8.1" encoding: "UTF-8"
+
+new FormModel {
+	"i18n.autoExternalize": true
+	"i18n.bundleName": "db"
+	"i18n.keyPrefix": "login"
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"background": sfield java.awt.Color black
+			"undecorated": true
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "dialogPane"
+				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
+				"background": sfield java.awt.Color black
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq {space :p:41:p, par l {comp passwordTextField:::p:267:p, comp nameTextField:::p:267:p, comp veriCodeTextField::l:p:267:p}, space ::41:x}, seq t {space ::63:x, par l {seq t {par l {seq l {comp loginButton:::p::p, space :p:70:p, comp registerButton:::p::p}, seq l {space :p:83:p, comp forgetLabel:::p::p}}, space :p:60:p}, seq t {comp titleLabel:::p:107:p, space :p:110:p}}}}"
+					"$verticalGroup": "par l {seq l {space :p:17:p, comp titleLabel:::p:48:p, space :p:29:p, comp nameTextField:::p::p, space :p:55:p, comp passwordTextField:::p::p, space ::89:x, comp veriCodeTextField:::p::p, space :p:49:p, par b {comp loginButton::b:p::p, comp registerButton::b:p::p}, space :p:32:p, comp forgetLabel:::p::p, space :p:31:p}}"
+				} ) {
+					name: "contentPanel"
+					"background": new java.awt.Color( 21, 23, 30, 255 )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "nameTextField"
+						"foreground": sfield java.awt.Color white
+						"background": new java.awt.Color( 21, 23, 30, 255 )
+						"toolTipText": "请输入用户名"
+						"border": new javax.swing.border.LineBorder( sfield java.awt.Color gray, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "passwordTextField"
+						"foreground": sfield java.awt.Color white
+						"toolTipText": "请输入密码"
+						"background": new java.awt.Color( 21, 23, 30, 255 )
+						"border": new javax.swing.border.LineBorder( sfield java.awt.Color gray, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "loginButton"
+						"text": new FormMessage( null, "login.loginButton.text" )
+						"foreground": sfield java.awt.Color white
+						"background": new java.awt.Color( 0, 116, 224, 255 )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "registerButton"
+						"text": new FormMessage( null, "login.registerButton.text" )
+						"foreground": sfield java.awt.Color white
+						"background": new java.awt.Color( 0, 116, 224, 255 )
+						"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+						"borderPainted": false
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "titleLabel"
+						"font": new java.awt.Font( "华文新魏", 0, 29 )
+						"text": new FormMessage( null, "login.titleLabel.text" )
+						"foreground": sfield java.awt.Color white
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "veriCodeTextField"
+						"foreground": sfield java.awt.Color white
+						"background": new java.awt.Color( 21, 23, 30, 255 )
+						"toolTipText": "请输入验证码"
+						"border": new javax.swing.border.LineBorder( sfield java.awt.Color gray, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "forgetLabel"
+						"text": new FormMessage( null, "login.forgetLabel.text" )
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 196608, 0, false )
+						"foreground": new java.awt.Color( 51, 153, 255, 255 )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 185, 35 )
+			"size": new java.awt.Dimension( 375, 530 )
+		} )
+	}
+}
