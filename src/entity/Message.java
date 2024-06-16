@@ -22,6 +22,8 @@ public class Message implements Serializable {
         this.roomName = roomName;
     }
 
+
+
     public String getRoomName() {
         return roomName;
     }

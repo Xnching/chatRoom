@@ -2,12 +2,14 @@ package Dao;
 
 import JDBC.JDBCUtils;
 import entity.Message;
+import entity.Room;
 import entity.User;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Vector;
 
-public class Imp implements UserDao, MessageDao {
+public class Imp implements UserDao, MessageDao, RoomDao {
 
 
     @Override
@@ -181,5 +183,50 @@ public class Imp implements UserDao, MessageDao {
         } finally {
             JDBCUtils.close(conn,pstmt,null,null);
         }
+    }
+
+    @Override
+    public boolean addChatRoom(String roomName) {
+        Connection conn = JDBCUtils.getConnection();
+        PreparedStatement pstmt = null; // 使用 PreparedStatement
+        ResultSet rs = null;
+        boolean flag = false;
+        String sql = "INSERT INTO croom VALUES (?)";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, roomName);
+            int line = pstmt.executeUpdate();
+            if (line > 0) {
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.close(conn, pstmt, rs, null); // 注意参数顺序
+        }
+        return flag;
+    }
+
+    @Override
+    public List<Room> getChatRoom() {
+        List<Room> v = new Vector<>();
+        Connection conn = JDBCUtils.getConnection();
+        PreparedStatement pstmt = null; // 使用 PreparedStatement
+        ResultSet rs = null;
+        String sql = "select * from croom ";
+        String id = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                id = rs.getString("id");
+                v.add(new Room(id));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.close(conn,pstmt,rs,null);
+        }
+        return v;
     }
 }

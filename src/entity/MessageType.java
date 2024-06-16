@@ -11,4 +11,7 @@ public interface MessageType {
     String MESSAGE_CLIENT_OFFLINE="8"; //发送目标不在线
     String MESSAGE_CHOOSE_ROOM="9"; //选择房间
     String MESSAGE_RECEIVE_OFFLINE_MESSAGE="10"; // 接收离线消息
+    String MESSAGE_QLIST_MES="11";//查询聊天室列表
+    String MESSAGE_NEWROOM_MES="12";//创建聊天室
+    String MESSAGE_QUSER_MES="13";//查询用户列表
 }
