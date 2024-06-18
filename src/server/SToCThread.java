@@ -10,6 +10,8 @@ import server.controller.SToCThreadController;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Objects;
 
 /*
  * 该类的一个对象和某个客户端保持通讯
@@ -24,6 +26,7 @@ public class SToCThread extends Thread{
     private static Imp imp = new Imp(); // 静态变量
 
     public SToCThread(Socket socket, String id) {
+        System.out.println("套接字是否一样！"+socket);
         this.socket=socket;
         this.id=id;
         user = imp.getUser(id);
@@ -34,13 +37,26 @@ public class SToCThread extends Thread{
     public void run(){
         System.out.println("服务器与客户【" + id + "】保持通信……");
         while (flag) {
+            if (socket.isClosed()||!socket.isConnected()){
+                System.out.println("用户"+user.getId()+"退出了！！！");
+                System.out.println("与用户"+user.getId()+"断开连接！！！");
+                flag = false;
+                SToCThreadController.logout(this);
+            }
             try {
                 ois = new ObjectInputStream(socket.getInputStream());
                 Message message = (Message) ois.readObject();
+                System.out.println("消息发送人："+message.getSender());
+                System.out.println("消息接收人："+message.getGetter());
+                System.out.println("消息类型："+message.getMessageType());
+                System.out.println("房间名："+message.getRoomName());
+                System.out.println("消息内容:"+message.getContent());
                 actionByMessageType(message);
-            } catch (Exception e) {
+            } catch (SocketException e) {
                 flag=false;
-                e.printStackTrace();
+                SToCThreadController.logout(this);
+            }catch (Exception e){
+
             }
         }
     }
@@ -48,7 +64,7 @@ public class SToCThread extends Thread{
     public void actionByMessageType(Message message){
         try {
             switch (message.getMessageType()){
-                case MessageType.MESSAGE_QUSER_MES :
+                case MessageType.MESSAGE_GET_ONLINE_FRIEND :
                     //对方请求列表
                     System.out.println("【" + message.getSender() + "】要看在线用户列表……");
                     System.out.println("[服务器 - " + Thread.currentThread().getName() +
@@ -76,6 +92,7 @@ public class SToCThread extends Thread{
                     System.out.println("用户【" + id + "】断开连接！");
                     break;
                 case MessageType.MESSAGE_COMM_MES:
+                    System.out.println("收到消息！准备给其他人发送消息！");
                     if(message.getGetter().equals("ALL")){
                         SToCThreadController.sendAll(socket, message,message.getRoomName());
                         break;
@@ -134,9 +151,29 @@ public class SToCThread extends Thread{
     }
     public void sendMessage(Message message) {
         try {
-            System.out.println("将要发送消息！消息类型为："+message.getMessageType()+",内容为:"+message.getContent());
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject(message);
+            if (Objects.equals(message.getMessageType(), MessageType.MESSAGE_COMM_MES)){
+                Socket getterSocket = SToCThreadController.getSocketById(message.getGetter());
+                System.out.println("查看套接字是谁的！"+getterSocket);
+                System.out.println("将要发送消息！消息类型为："+message.getMessageType()+",内容为:"+message.getContent());
+                oos = new ObjectOutputStream(getterSocket.getOutputStream());
+                oos.writeObject(message);
+                System.out.println("已经发送普通消息！消息类型为：");
+                System.out.println("消息发送人："+message.getSender());
+                System.out.println("消息接收人："+message.getGetter());
+                System.out.println("消息类型："+message.getMessageType());
+                System.out.println("房间名："+message.getRoomName());
+                System.out.println("消息内容:"+message.getContent());
+            }else {
+                oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.writeObject(message);
+                System.out.println("已经发送消息！消息类型为：");
+                System.out.println("消息发送人："+message.getSender());
+                System.out.println("消息接收人："+message.getGetter());
+                System.out.println("消息类型："+message.getMessageType());
+                System.out.println("房间名："+message.getRoomName());
+                System.out.println("消息内容:"+message.getContent());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
