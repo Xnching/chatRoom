@@ -36,6 +36,7 @@ public class SToCThread extends Thread{
     @Override
     public void run(){
         System.out.println("服务器与客户【" + id + "】保持通信……");
+
         while (flag) {
             if (socket.isClosed()||!socket.isConnected()){
                 System.out.println("用户"+user.getId()+"退出了！！！");
@@ -51,6 +52,7 @@ public class SToCThread extends Thread{
                 System.out.println("消息类型："+message.getMessageType());
                 System.out.println("房间名："+message.getRoomName());
                 System.out.println("消息内容:"+message.getContent());
+                System.out.println("现在时间为："+message.getSendTime());
                 actionByMessageType(message);
             } catch (SocketException e) {
                 flag=false;

@@ -11,11 +11,8 @@ public class JDBCUtils {
     private static String password;
 
     static{
-        //JDBCUtils.class获得对象
-        //getClassLoader()类加载器
-        //getResourceAsStream("db.properties")加载资源文件放到输入流中
-        InputStream is = JDBCUtils.class.getClassLoader().getResourceAsStream("db.properties");
 
+        InputStream is = JDBCUtils.class.getClassLoader().getResourceAsStream("db.properties");
         //用此类型加载流文件
         Properties p = new Properties();
         try {

@@ -27,7 +27,7 @@ public class ServerController {
     public ServerController(){
         try {
             System.out.println("此处为一直处于监听端口。。。。");
-            serverSocket = new ServerSocket(5176);
+            serverSocket = new ServerSocket(5999);
             while (true){
                 //服务器接受客户端的连接请求，并返回一个套接字，客户机通过此套接字与服务器通信。
                 Socket socket = serverSocket.accept();
